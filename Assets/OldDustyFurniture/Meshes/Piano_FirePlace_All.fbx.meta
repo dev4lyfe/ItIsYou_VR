@@ -1,0 +1,160 @@
+fileFormatVersion: 2
+guid: bcee6850a5cfbf540b46aa1154e3f9e1
+timeCreated: 1485304620
+licenseType: Store
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: Fireplace
+    100002: Fireplace_Post
+    100004: Piano2
+    100006: //RootNode
+    100008: Piano_Seat
+    100010: FirePlace
+    100012: Firewood1
+    100014: Firewood2
+    100016: Firewood_Bracket
+    100018: Piano
+    100020: FirePlace1
+    100022: Fireplace_Post1
+    100024: Firewood
+    100026: Firewood3
+    100028: transform1
+    100030: transform2
+    100032: transform3
+    100034: transform4
+    100036: transform5
+    100038: transform6
+    400000: Fireplace
+    400002: Fireplace_Post
+    400004: Piano2
+    400006: //RootNode
+    400008: Piano_Seat
+    400010: FirePlace
+    400012: Firewood1
+    400014: Firewood2
+    400016: Firewood_Bracket
+    400018: Piano
+    400020: FirePlace1
+    400022: Fireplace_Post1
+    400024: Firewood
+    400026: Firewood3
+    400028: transform1
+    400030: transform2
+    400032: transform3
+    400034: transform4
+    400036: transform5
+    400038: transform6
+    2300000: Fireplace
+    2300002: Fireplace_Post
+    2300004: Piano2
+    2300006: Piano_Seat
+    2300008: FirePlace
+    2300010: Firewood1
+    2300012: Firewood2
+    2300014: Firewood_Bracket
+    2300016: Piano
+    2300018: FirePlace1
+    2300020: Firewood
+    3300000: Fireplace
+    3300002: Fireplace_Post
+    3300004: Piano2
+    3300006: Piano_Seat
+    3300008: FirePlace
+    3300010: Firewood1
+    3300012: Firewood2
+    3300014: Firewood_Bracket
+    3300016: Piano
+    3300018: FirePlace1
+    3300020: Firewood
+    4300000: Fireplace
+    4300002: Fireplace_Post
+    4300004: Piano_Seat
+    4300006: Piano2
+    4300008: Piano
+    4300010: Firewood_Bracket
+    4300012: Firewood1
+    4300014: Firewood2
+    4300016: FirePlace
+    4300018: Firewood
+    4300020: FirePlace1
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
