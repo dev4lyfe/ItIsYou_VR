@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b0911c2daec81f749aa77a70d33f9bc1
+guid: 48ce7687d2d267d49a847dce05d52928
 timeCreated: 1526535690
 licenseType: Free
 ModelImporter:
@@ -11,7 +11,7 @@ ModelImporter:
     2100002: 'Material #13'
     2300000: //RootNode
     3300000: //RootNode
-    4300000: Box001
+    4300000: Box002
   externalObjects: {}
   materials:
     importMaterials: 1
