@@ -59,16 +59,17 @@ namespace VRStandardAssets.Utils
       
         private void EyeRaycast()
         {
-            // Show the debug ray if required
-            if (m_ShowDebugRay)
-            {
-                Debug.DrawRay(m_Camera.position, m_Camera.forward * m_DebugRayLength, Color.blue, m_DebugRayDuration);
-            }
 
             // Create a ray that points forwards from the camera.
             Ray ray = new Ray(m_Camera.position, m_Camera.forward);
             RaycastHit hit;
             
+			// Show the debug ray if required
+			if (m_ShowDebugRay)
+			{
+				Debug.DrawRay(ray.origin, ray.direction * m_DebugRayLength, Color.blue, m_DebugRayDuration);
+			}
+
             // Do the raycast forweards to see if we hit an interactive item
             if (Physics.Raycast(ray, out hit, m_RayLength, ~m_ExclusionLayers))
             {

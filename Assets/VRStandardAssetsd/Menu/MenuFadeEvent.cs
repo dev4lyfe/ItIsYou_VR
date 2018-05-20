@@ -9,11 +9,16 @@ public class MenuFadeEvent : MonoBehaviour
 
     public UnityEvent OnButtonSelected;
     public UnityEvent OnFadeComplete;
+	public UnityEvent OnFadeInBetweenEvent;
+	public UnityEvent OnFadeInStartEvent;
 
-    //[SerializeField] private SelectionRadial m_SelectionRadial;       // This controls when the selection is complete.
     [SerializeField] private VRInteractiveItem m_InteractiveItem;       // The interactive item for where the user should click to load the level.
 
     private bool m_GazeOver;                                            // Whether the user is looking at the VRInteractiveItem currently.
+
+	float gazeTime = 0f;
+	float gazeTimeToActivate = 2.5f;
+
 
     private void OnEnable()
     {
@@ -34,22 +39,20 @@ public class MenuFadeEvent : MonoBehaviour
     private void HandleOver()
     {
         // When the user looks at the rendering of the scene, show the radial.
-        //m_SelectionRadial.Show();
+		SelectionRadial.instance.Show(gazeTimeToActivate);
+
+		gazeTime = 0f;
 
         m_GazeOver = true;
     }
 
-
     private void HandleOut()
     {
         // When the user looks away from the rendering of the scene, hide the radial.
-        //m_SelectionRadial.Hide();
+		SelectionRadial.instance.Hide();
 
         m_GazeOver = false;
     }
-
-    float gazeTime = 0f;
-    float gazeTimeToActivate = 1.5f;
 
 	private void Update()
 	{
@@ -62,7 +65,6 @@ public class MenuFadeEvent : MonoBehaviour
             }
         }
 	}
-
 
 	//private void HandleSelectionComplete()
     //{
@@ -85,12 +87,12 @@ public class MenuFadeEvent : MonoBehaviour
         if (OnButtonSelected != null)
             OnButtonSelected.Invoke();
 
-        float fadeTime = 1f;
+		HandleOut ();
 
         // Wait for the camera to fade out.
-        SteamVR_Fade.Start(Color.black, fadeTime);
+		GhettoVRFade.StartFadeInOut (0.75f, 1f, .75f, OnFadeInBetweenEvent, OnFadeInStartEvent, OnFadeComplete);
 
-        yield return new WaitForSeconds(fadeTime);
+		yield return new WaitForSeconds(0.75f + 1f + .75f);
 
         // If anything is subscribed to the OnButtonSelected event, call it.
         if (OnFadeComplete != null)

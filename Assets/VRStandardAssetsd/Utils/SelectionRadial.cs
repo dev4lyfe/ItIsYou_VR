@@ -11,10 +11,13 @@ namespace VRStandardAssets.Utils
     // coroutine which returns once the bar is filled.
     public class SelectionRadial : MonoBehaviour
     {
+		public static SelectionRadial instance;
+
         public event Action OnSelectionComplete;                                                // This event is triggered when the bar has filled.
 
 
         [SerializeField] private float m_SelectionDuration = 2f;                                // How long it takes for the bar to fill.
+		[SerializeField] private float maxAlpha = 0.3f;
         [SerializeField] private bool m_HideOnStart = true;                                     // Whether or not the bar should be visible at the start.
         [SerializeField] private Image m_Selection;                                             // Reference to the image who's fill amount is adjusted to display the bar.
         [SerializeField] private VRInput m_VRInput;                                             // Reference to the VRInput so that input events can be subscribed to.
@@ -27,6 +30,14 @@ namespace VRStandardAssets.Utils
 
         public float SelectionDuration { get { return m_SelectionDuration; } }
 
+		void Awake() {
+			if (instance == null) {
+				instance = this;
+			} else {
+				Debug.LogError ("Instance of SelectionRadial already exists in scene. Disabling", this);
+				this.enabled = false;
+			}
+		}
 
         private void OnEnable()
         {
@@ -52,10 +63,13 @@ namespace VRStandardAssets.Utils
         }
 
 
-        public void Show()
+		public void Show(float selectionDuration = -1f)
         {
+			if (selectionDuration > 0f)
+				m_SelectionDuration = selectionDuration;
             m_Selection.gameObject.SetActive(true);
             m_IsSelectionRadialActive = true;
+			HandleDown ();
         }
 
 
@@ -65,7 +79,8 @@ namespace VRStandardAssets.Utils
             m_IsSelectionRadialActive = false;
 
             // This effectively resets the radial for when it's shown again.
-            m_Selection.fillAmount = 0f;            
+            m_Selection.fillAmount = 0f;      
+			HandleUp ();
         }
 
 
@@ -83,6 +98,10 @@ namespace VRStandardAssets.Utils
             {
                 // The image's fill amount requires a value from 0 to 1 so we normalise the time.
                 m_Selection.fillAmount = timer / m_SelectionDuration;
+
+				Color col = m_Selection.color;
+				col.a = Mathf.Lerp (0f, maxAlpha, timer / m_SelectionDuration);
+				m_Selection.color = col;
 
                 // Increase the timer by the time between frames and wait for the next frame.
                 timer += Time.deltaTime;

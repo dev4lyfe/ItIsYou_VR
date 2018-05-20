@@ -8,8 +8,10 @@ public class DIrectionalAudioListenerVolume : MonoBehaviour {
 
     AudioSource audioSource;
 
+	[SerializeField]
     float hardZone = 0.1f;
-    float softZone = 0.6f;
+	[SerializeField]
+	float softZone = 0.6f;
 
 	void Start () {
         audioSource = GetComponent<AudioSource>();
