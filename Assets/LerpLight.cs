@@ -5,7 +5,7 @@ using UnityEngine;
 public class LerpLight : MonoBehaviour {
 
 	public float startIntensity;
-	public float endInstenity;
+	public float endIntensity;
 	public float lerpDuration;
 	float lerpVal;
 	public Light lightToModify;
@@ -15,18 +15,23 @@ public class LerpLight : MonoBehaviour {
 
 	public void StartLerp()
 	{
-		
+		isLerping = true;
+		lerpVal = 0;
 	}
 	// Use this for initialization
 	void Start () {
-		
+		lightToModify = GetComponent<Light> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (isLerping) {
 			lerpVal += Time.deltaTime;
-			lightToModify.intensity = lerpVal/lerpDuration;
+			lightToModify.intensity = endIntensity * lerpVal/lerpDuration;
+			if (lerpVal/lerpDuration > 1) {
+				lerpVal = 0;
+				isLerping = false;
+			}
 		}
 	}
 }
