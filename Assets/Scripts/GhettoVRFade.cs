@@ -32,11 +32,24 @@ public class GhettoVRFade : MonoBehaviour {
 	/// Sets the fade 0f-1f
 	/// </summary>
 	/// <param name="percentage">Percentage.</param>
-	public static void SetFade(float percentage) {
+	public static void SetFade(float percentage = 1f) {
 		SetAlpha (instance.material, percentage);
 	}
 
 	bool fading = false;
+
+	public void FadeIn ()
+	{
+		instance.StartCoroutine (instance.FadeInOut (3f, 0f, 0f, null, null, null));
+		Invoke ("SetFade",0);
+		StartCoroutine (Quit());
+	}
+
+	public IEnumerator Quit()
+	{
+		yield return new WaitForSeconds (3f);
+		UnityEngine.SceneManagement.SceneManager.LoadScene (0);
+	}
 
 	public static void StartFadeInOut(float fadeInTime, float fadeInBetweenTime, float fadeOutTime, UnityEvent fadeInBetweenEvent = null, UnityEvent fadeInStartEvent = null, UnityEvent fadeInDoneEvent = null) {
 		instance.StartCoroutine (instance.FadeInOut (fadeInTime, fadeInBetweenTime, fadeOutTime, fadeInBetweenEvent, fadeInStartEvent, fadeInDoneEvent));

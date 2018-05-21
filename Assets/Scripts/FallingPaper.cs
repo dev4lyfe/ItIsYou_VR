@@ -21,10 +21,20 @@ public class FallingPaper : MonoBehaviour {
 
     VRInteractiveItem vRInteractiveItem;
 
+	[SerializeField]
+	Collider rigidBodyCollider;
+
+	[SerializeField]
+	Collider lookCollider;
+
     static FallingPaper currentViewedPaper = null;
+
+	[SerializeField]
+	Vector3 fallingSpeed;
 
 	void Start () {
         endYPosition = transform.position.y;
+		vRInteractiveItem = GetComponent<VRInteractiveItem> ();
 
         transform.position += Vector3.up * 10f;
         foreach(Renderer rend in GetComponentsInChildren<Renderer>()) {
@@ -32,6 +42,8 @@ public class FallingPaper : MonoBehaviour {
         }
         Activate();
         GetComponent<Rigidbody>().isKinematic = true;
+		lookCollider.enabled = true;
+		rigidBodyCollider.enabled = false;
 	}
 	
 	public void Activate () {
@@ -45,21 +57,28 @@ public class FallingPaper : MonoBehaviour {
         fallSpeed = Random.Range(minFallSpeed, maxFallSpeed);
 	}
 
+	float closeToFaceTime = 0f;
+
 	private void Update()
 	{
         if(active) {
-			if(vRInteractiveItem.IsOver) {
-				if(currentViewedPaper == null) {
+			if(vRInteractiveItem.IsOver && closeToFaceTime < 2f) {
+				if(currentViewedPaper == null && Mathf.Abs(transform.position.y - endYPosition) < 3f) {
 					currentViewedPaper = this;
-                } else {
+				} else if(currentViewedPaper != this) {
                     Fall();
                 }
 				if(currentViewedPaper == this) {
-                    Vector3 targetPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
-                    Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward * -1f);
+                    Vector3 targetPosition = Camera.main.transform.position + Camera.main.transform.forward * .35f;
+                    Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward);
 
-                    transform.position = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * 2f);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
+					if (Vector3.Distance (transform.position, targetPosition) < 0.11f)
+						closeToFaceTime += Time.deltaTime;
+
+					fallingSpeed = Vector3.zero;
+
+                    transform.position = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * 1f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 1f);
 				}
             } else {
                 if (currentViewedPaper == this)
@@ -77,10 +96,16 @@ public class FallingPaper : MonoBehaviour {
         }
         else if (yDifference < 0.16f)
         {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+			Vector3 targetFallingSpeed = Vector3.down * fallSpeed;
+			fallingSpeed = Vector3.Lerp (fallingSpeed, targetFallingSpeed, Time.deltaTime * 1.5f);
+			transform.position += fallingSpeed * Time.deltaTime;
 
-            GetComponent<Rigidbody>().useGravity = true;
-            GetComponent<Rigidbody>().isKinematic = false;
+			if (GetComponent<Rigidbody> ().useGravity == false) {
+				GetComponent<Rigidbody> ().useGravity = true;
+				GetComponent<Rigidbody> ().isKinematic = false;
+				lookCollider.enabled = false;
+				rigidBodyCollider.enabled = true;
+			}
             //transform.Rotate(
             //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
             //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
@@ -89,7 +114,10 @@ public class FallingPaper : MonoBehaviour {
         }
         else
         {
-            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+			Vector3 targetFallingSpeed = Vector3.down * fallSpeed;
+			fallingSpeed = Vector3.Lerp (fallingSpeed, targetFallingSpeed, Time.deltaTime * 1.5f);
+			transform.position += fallingSpeed * Time.deltaTime;
+
             transform.Rotate(
                 rotationVelocity.x * rotateSpeed * Time.deltaTime,
                 rotationVelocity.y * rotateSpeed * Time.deltaTime,
