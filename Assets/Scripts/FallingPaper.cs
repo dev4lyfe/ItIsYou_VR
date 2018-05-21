@@ -31,6 +31,7 @@ public class FallingPaper : MonoBehaviour {
             rend.enabled = false;
         }
         Activate();
+        GetComponent<Rigidbody>().isKinematic = true;
 	}
 	
 	public void Activate () {
@@ -79,6 +80,7 @@ public class FallingPaper : MonoBehaviour {
             transform.position += Vector3.down * fallSpeed * Time.deltaTime;
 
             GetComponent<Rigidbody>().useGravity = true;
+            GetComponent<Rigidbody>().isKinematic = false;
             //transform.Rotate(
             //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
             //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
