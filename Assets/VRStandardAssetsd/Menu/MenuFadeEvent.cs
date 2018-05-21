@@ -39,7 +39,7 @@ public class MenuFadeEvent : MonoBehaviour
     private void HandleOver()
     {
         // When the user looks at the rendering of the scene, show the radial.
-		SelectionRadial.instance.Show(gazeTimeToActivate);
+        SelectionRadial.instance.Show(gameObject, gazeTimeToActivate);
 
 		gazeTime = 0f;
 

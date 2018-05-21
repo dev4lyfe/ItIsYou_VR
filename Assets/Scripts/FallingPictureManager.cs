@@ -38,7 +38,7 @@ public class FallingPictureManager : MonoBehaviour {
 	}
 
     void SpawnPhoto() {
-        Vector3 spawnPos = transform.position + new Vector3(Random.Range(-5.5f, 5.5f), 0f, Random.Range(-6f, 6f));
+		Vector3 spawnPos = transform.position + transform.forward * Random.Range (-5.5f, 5.5f);
         int index = Random.Range(0, availablePhotoTextures.Count);
         Texture texture = availablePhotoTextures[index];
         availablePhotoTextures.RemoveAt(index);

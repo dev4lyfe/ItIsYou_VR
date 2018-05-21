@@ -62,9 +62,18 @@ namespace VRStandardAssets.Utils
                 Hide();
         }
 
+		private void Update()
+		{
+            if (currentTarget != null)
+                if (currentTarget.activeInHierarchy == false)
+                    Hide();
+		}
 
-		public void Show(float selectionDuration = -1f)
+		GameObject currentTarget;
+
+        public void Show(GameObject target = null, float selectionDuration = -1f)
         {
+            currentTarget = target;
 			if (selectionDuration > 0f)
 				m_SelectionDuration = selectionDuration;
             m_Selection.gameObject.SetActive(true);
@@ -75,6 +84,7 @@ namespace VRStandardAssets.Utils
 
         public void Hide()
         {
+            currentTarget = null;
             m_Selection.gameObject.SetActive(false);
             m_IsSelectionRadialActive = false;
 
@@ -82,7 +92,6 @@ namespace VRStandardAssets.Utils
             m_Selection.fillAmount = 0f;      
 			HandleUp ();
         }
-
 
         private IEnumerator FillSelectionRadial()
         {
