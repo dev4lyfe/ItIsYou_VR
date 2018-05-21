@@ -58,7 +58,7 @@ public class VRInteractiveItemEvent : MonoBehaviour
     private void HandleOut()
     {
         // When the user looks away from the rendering of the scene, hide the radial.
-		SelectionRadial.instance.Hide();
+		SelectionRadial.instance.Hide(gameObject);
 
 		OnLeave.Invoke ();
 
