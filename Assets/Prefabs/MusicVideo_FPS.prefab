@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 143792146601490012}
   - component: {fileID: 114282326941404034}
   - component: {fileID: 114851490943573068}
+  - component: {fileID: 114956355524494952}
   m_Layer: 0
   m_Name: MusicVideo_FPS
   m_TagString: Untagged
@@ -256,15 +257,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1459933584938002}
-  m_LocalRotation: {x: 0, y: 0.12749739, z: 0, w: 0.99183893}
-  m_LocalPosition: {x: -8.51, y: 2.117, z: 23.3}
+  m_LocalRotation: {x: -0, y: 0.7914905, z: -0, w: 0.61118156}
+  m_LocalPosition: {x: -7.07, y: 1.793, z: 23.52}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4015253611318272}
   - {fileID: 4925094812256466}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 14.65, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 104.65, z: 0}
 --- !u!4 &4818050542548016
 Transform:
   m_ObjectHideFlags: 1
@@ -323,9 +324,9 @@ Camera:
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
-  m_HDR: 0
+  m_HDR: 1
   m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
+  m_AllowDynamicResolution: 1
   m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
@@ -588,7 +589,7 @@ MonoBehaviour:
   m_Camera: {fileID: 4008208328109818}
   m_ExclusionLayers:
     serializedVersion: 2
-    m_Bits: 4294967039
+    m_Bits: 4294965503
   m_Reticle: {fileID: 0}
   m_VrInput: {fileID: 114282326941404034}
   m_ShowDebugRay: 1
@@ -638,6 +639,17 @@ MonoBehaviour:
   verbose: 0
   createComponents: 1
   updateDynamically: 1
+--- !u!114 &114956355524494952
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1459933584938002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fd1ec4772f29bd48b756d73582073ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114976042349573012
 MonoBehaviour:
   m_ObjectHideFlags: 1
