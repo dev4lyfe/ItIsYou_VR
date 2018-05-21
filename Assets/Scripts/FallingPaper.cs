@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRStandardAssets.Utils;
 
 public class FallingPaper : MonoBehaviour {
 
-    Vector3 endPosition;
-    Quaternion endRotation;
+    float endYPosition;
 
     bool active = false;
 
@@ -19,9 +19,12 @@ public class FallingPaper : MonoBehaviour {
 
     Vector3 rotationVelocity;
 
+    VRInteractiveItem vRInteractiveItem;
+
+    static FallingPaper currentViewedPaper = null;
+
 	void Start () {
-        endPosition = transform.position;
-        endRotation = transform.rotation;
+        endYPosition = transform.position.y;
 
         transform.position += Vector3.up * 10f;
         foreach(Renderer rend in GetComponentsInChildren<Renderer>()) {
@@ -44,33 +47,52 @@ public class FallingPaper : MonoBehaviour {
 	private void Update()
 	{
         if(active) {
-            if(Vector3.Distance(transform.position, endPosition) < 0.1f) {
-                active = false;
-            } else if(Vector3.Distance(transform.position, endPosition) < 0.11f) {
-                transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+			if(vRInteractiveItem.IsOver) {
+				if(currentViewedPaper == null) {
+					currentViewedPaper = this;
+                } else {
+                    Fall();
+                }
+				if(currentViewedPaper == this) {
+                    Vector3 targetPosition = Camera.main.transform.position + Camera.main.transform.forward * 1.5f;
+                    Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward * -1f);
 
-
-                //transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime*3f);
-                GetComponent<Rigidbody>().useGravity = true;
-                //transform.Rotate(
-                //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
-                //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
-                //    rotationVelocity.z * rotateSpeed * Time.deltaTime
-                //);
+                    transform.position = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * 2f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 2f);
+				}
             } else {
-				transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-				transform.Rotate(
-					rotationVelocity.x * rotateSpeed * Time.deltaTime, 
-					rotationVelocity.y * rotateSpeed * Time.deltaTime, 
-					rotationVelocity.z * rotateSpeed * Time.deltaTime
-				);
+                if (currentViewedPaper == this)
+                    currentViewedPaper = null;
+                Fall();
             }
         }
 	}
 
-	//private void OnDrawGizmos()
-	//{
- //       Gizmos.color = Color.red;
- //       Gizmos.DrawWireSphere(transform.position + Vector3.up * 10f, 0.5f);
-	//}
+    void Fall() {
+        float yDifference = Mathf.Abs(transform.position.y - endYPosition);
+        if (yDifference < 0.1f)
+        {
+            active = false;
+        }
+        else if (yDifference < 0.16f)
+        {
+            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+
+            GetComponent<Rigidbody>().useGravity = true;
+            //transform.Rotate(
+            //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
+            //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
+            //    rotationVelocity.z * rotateSpeed * Time.deltaTime
+            //);
+        }
+        else
+        {
+            transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+            transform.Rotate(
+                rotationVelocity.x * rotateSpeed * Time.deltaTime,
+                rotationVelocity.y * rotateSpeed * Time.deltaTime,
+                rotationVelocity.z * rotateSpeed * Time.deltaTime
+            );
+        }
+    }
 }
