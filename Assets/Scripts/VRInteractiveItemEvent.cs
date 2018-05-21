@@ -34,7 +34,7 @@ public class VRInteractiveItemEvent : MonoBehaviour
     private void HandleOver()
     {
         // When the user looks at the rendering of the scene, show the radial.
-		SelectionRadial.instance.Show(timeOverToActivate);
+		SelectionRadial.instance.Show(gameObject, timeOverToActivate);
 
 		OnOver.Invoke ();
 
