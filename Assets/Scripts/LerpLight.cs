@@ -27,7 +27,8 @@ public class LerpLight : MonoBehaviour {
 	void Update () {
 		if (isLerping) {
 			lerpVal += Time.deltaTime;
-			lightToModify.intensity = endIntensity * lerpVal/lerpDuration;
+			float newIntensity = Mathf.Lerp (startIntensity, endIntensity, lerpVal/lerpDuration);
+			lightToModify.intensity = newIntensity;
 			if (lerpVal/lerpDuration > 1) {
 				lerpVal = 0;
 				isLerping = false;

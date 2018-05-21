@@ -78,12 +78,15 @@ namespace VRStandardAssets.Utils
 				m_SelectionDuration = selectionDuration;
             m_Selection.gameObject.SetActive(true);
             m_IsSelectionRadialActive = true;
+			HandleUp (); 
 			HandleDown ();
         }
 
 
-        public void Hide()
+		public void Hide(GameObject target = null)
         {
+			if (target != currentTarget)
+				return;
             currentTarget = null;
             m_Selection.gameObject.SetActive(false);
             m_IsSelectionRadialActive = false;
