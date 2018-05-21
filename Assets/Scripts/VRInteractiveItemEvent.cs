@@ -4,7 +4,7 @@ using UnityEngine;
 using VRStandardAssets.Utils;
 using UnityEngine.Events;
 
-public class VRIneractiveItemEvent : MonoBehaviour
+public class VRInteractiveItemEvent : MonoBehaviour
 {
     public UnityEvent OnOver;
 	public UnityEvent OnLeave;
