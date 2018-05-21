@@ -15,6 +15,8 @@ public class VRInteractiveItemEvent : MonoBehaviour
 
     private bool m_GazeOver;                                            // Whether the user is looking at the VRInteractiveItem currently.
 
+	public bool deactiveOnComplete = true;
+
     private void OnEnable()
     {
         m_InteractiveItem.OnOver += HandleOver;
@@ -63,6 +65,11 @@ public class VRInteractiveItemEvent : MonoBehaviour
                 gazeTime += Time.unscaledDeltaTime;
 				if(gazeTime >= timeOverToActivate) {
 					OnTimedOver.Invoke ();
+					HandleOut ();
+					if (deactiveOnComplete) {
+						this.enabled = false;
+						GetComponent<VRInteractiveItem> ().enabled = false;
+					}
                 }
             }
         }
