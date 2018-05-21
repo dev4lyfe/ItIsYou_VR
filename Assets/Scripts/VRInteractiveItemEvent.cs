@@ -11,7 +11,7 @@ public class VRInteractiveItemEvent : MonoBehaviour
 	public float timeOverToActivate = 1f;
 	public UnityEvent OnTimedOver;
 
-    [SerializeField] private VRInteractiveItem m_InteractiveItem;       // The interactive item for where the user should click to load the level.
+    [SerializeField] public VRInteractiveItem m_InteractiveItem;       // The interactive item for where the user should click to load the level.
 
     private bool m_GazeOver;                                            // Whether the user is looking at the VRInteractiveItem currently.
 
@@ -19,17 +19,26 @@ public class VRInteractiveItemEvent : MonoBehaviour
 
     private void OnEnable()
     {
-        m_InteractiveItem.OnOver += HandleOver;
-        m_InteractiveItem.OnOut += HandleOut;
+        if(m_InteractiveItem) {
+            m_InteractiveItem.OnOver += HandleOver;
+            m_InteractiveItem.OnOut += HandleOut;
+        }
         //m_SelectionRadial.OnSelectionComplete += HandleSelectionComplete;
     }
 
 
     private void OnDisable()
     {
+        if(m_InteractiveItem) {
+            m_InteractiveItem.OnOver -= HandleOver;
+            m_InteractiveItem.OnOut -= HandleOut;
+        }
+        //m_SelectionRadial.OnSelectionComplete -= HandleSelectionComplete;
+    }
+
+    public void FixOverEvents() {
         m_InteractiveItem.OnOver -= HandleOver;
         m_InteractiveItem.OnOut -= HandleOut;
-        //m_SelectionRadial.OnSelectionComplete -= HandleSelectionComplete;
     }
 
 
