@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using VRStandardAssets.Utils;
 
 public class FallingPaper : MonoBehaviour {
 
-    Vector3 endPosition;
-    Quaternion endRotation;
+    float endYPosition;
 
     bool active = false;
 
@@ -19,15 +19,31 @@ public class FallingPaper : MonoBehaviour {
 
     Vector3 rotationVelocity;
 
+    VRInteractiveItem vRInteractiveItem;
+
+	[SerializeField]
+	Collider rigidBodyCollider;
+
+	[SerializeField]
+	Collider lookCollider;
+
+    static FallingPaper currentViewedPaper = null;
+
+	[SerializeField]
+	Vector3 fallingSpeed;
+
 	void Start () {
-        endPosition = transform.position;
-        endRotation = transform.rotation;
+        endYPosition = transform.position.y;
+		vRInteractiveItem = GetComponent<VRInteractiveItem> ();
 
         transform.position += Vector3.up * 10f;
         foreach(Renderer rend in GetComponentsInChildren<Renderer>()) {
             rend.enabled = false;
         }
         Activate();
+        GetComponent<Rigidbody>().isKinematic = true;
+		lookCollider.enabled = true;
+		rigidBodyCollider.enabled = false;
 	}
 	
 	public void Activate () {
@@ -41,36 +57,72 @@ public class FallingPaper : MonoBehaviour {
         fallSpeed = Random.Range(minFallSpeed, maxFallSpeed);
 	}
 
+	float closeToFaceTime = 0f;
+
 	private void Update()
 	{
         if(active) {
-            if(Vector3.Distance(transform.position, endPosition) < 0.1f) {
-                active = false;
-            } else if(Vector3.Distance(transform.position, endPosition) < 0.11f) {
-                transform.position += Vector3.down * fallSpeed * Time.deltaTime;
+			if(vRInteractiveItem.IsOver && closeToFaceTime < 2f) {
+				if(currentViewedPaper == null && Mathf.Abs(transform.position.y - endYPosition) < 3f) {
+					currentViewedPaper = this;
+				} else if(currentViewedPaper != this) {
+                    Fall();
+                }
+				if(currentViewedPaper == this) {
+                    Vector3 targetPosition = Camera.main.transform.position + Camera.main.transform.forward * .35f;
+                    Quaternion targetRotation = Quaternion.LookRotation(Camera.main.transform.forward);
 
+					if (Vector3.Distance (transform.position, targetPosition) < 0.11f)
+						closeToFaceTime += Time.deltaTime;
 
-                //transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime*3f);
-                GetComponent<Rigidbody>().useGravity = true;
-                //transform.Rotate(
-                //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
-                //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
-                //    rotationVelocity.z * rotateSpeed * Time.deltaTime
-                //);
+					fallingSpeed = Vector3.zero;
+
+                    transform.position = Vector3.Slerp(transform.position, targetPosition, Time.deltaTime * 1f);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 1f);
+				}
             } else {
-				transform.position += Vector3.down * fallSpeed * Time.deltaTime;
-				transform.Rotate(
-					rotationVelocity.x * rotateSpeed * Time.deltaTime, 
-					rotationVelocity.y * rotateSpeed * Time.deltaTime, 
-					rotationVelocity.z * rotateSpeed * Time.deltaTime
-				);
+                if (currentViewedPaper == this)
+                    currentViewedPaper = null;
+                Fall();
             }
         }
 	}
 
-	//private void OnDrawGizmos()
-	//{
- //       Gizmos.color = Color.red;
- //       Gizmos.DrawWireSphere(transform.position + Vector3.up * 10f, 0.5f);
-	//}
+    void Fall() {
+        float yDifference = Mathf.Abs(transform.position.y - endYPosition);
+        if (yDifference < 0.1f)
+        {
+            active = false;
+        }
+        else if (yDifference < 0.16f)
+        {
+			Vector3 targetFallingSpeed = Vector3.down * fallSpeed;
+			fallingSpeed = Vector3.Lerp (fallingSpeed, targetFallingSpeed, Time.deltaTime * 1.5f);
+			transform.position += fallingSpeed * Time.deltaTime;
+
+			if (GetComponent<Rigidbody> ().useGravity == false) {
+				GetComponent<Rigidbody> ().useGravity = true;
+				GetComponent<Rigidbody> ().isKinematic = false;
+				lookCollider.enabled = false;
+				rigidBodyCollider.enabled = true;
+			}
+            //transform.Rotate(
+            //    rotationVelocity.x * rotateSpeed * Time.deltaTime,
+            //    rotationVelocity.y * rotateSpeed * Time.deltaTime,
+            //    rotationVelocity.z * rotateSpeed * Time.deltaTime
+            //);
+        }
+        else
+        {
+			Vector3 targetFallingSpeed = Vector3.down * fallSpeed;
+			fallingSpeed = Vector3.Lerp (fallingSpeed, targetFallingSpeed, Time.deltaTime * 1.5f);
+			transform.position += fallingSpeed * Time.deltaTime;
+
+            transform.Rotate(
+                rotationVelocity.x * rotateSpeed * Time.deltaTime,
+                rotationVelocity.y * rotateSpeed * Time.deltaTime,
+                rotationVelocity.z * rotateSpeed * Time.deltaTime
+            );
+        }
+    }
 }

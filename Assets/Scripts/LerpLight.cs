@@ -20,7 +20,7 @@ public class LerpLight : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-		lightToModify = GetComponent<Light> ();
+		if (lightToModify == null)lightToModify = GetComponent<Light> ();
 	}
 	
 	// Update is called once per frame

@@ -15,6 +15,8 @@ public class VRInteractiveItemEvent : MonoBehaviour
 
     private bool m_GazeOver;                                            // Whether the user is looking at the VRInteractiveItem currently.
 
+	public bool deactiveOnComplete = true;
+
     private void OnEnable()
     {
         m_InteractiveItem.OnOver += HandleOver;
@@ -34,7 +36,7 @@ public class VRInteractiveItemEvent : MonoBehaviour
     private void HandleOver()
     {
         // When the user looks at the rendering of the scene, show the radial.
-		SelectionRadial.instance.Show(timeOverToActivate);
+		SelectionRadial.instance.Show(gameObject, timeOverToActivate);
 
 		OnOver.Invoke ();
 
@@ -63,6 +65,11 @@ public class VRInteractiveItemEvent : MonoBehaviour
                 gazeTime += Time.unscaledDeltaTime;
 				if(gazeTime >= timeOverToActivate) {
 					OnTimedOver.Invoke ();
+					HandleOut ();
+					if (deactiveOnComplete) {
+						this.enabled = false;
+						GetComponent<VRInteractiveItem> ().enabled = false;
+					}
                 }
             }
         }

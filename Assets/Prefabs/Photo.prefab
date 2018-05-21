@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4156521360952496}
   - component: {fileID: 33083695716162218}
   - component: {fileID: 23814720856177918}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Photo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   - component: {fileID: 4012570686875758}
   - component: {fileID: 33975288739768424}
   - component: {fileID: 23558101068840004}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 4679477461016782}
   - component: {fileID: 33920563002124832}
   - component: {fileID: 23448548643097582}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Plane (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,9 @@ GameObject:
   - component: {fileID: 114097681956973706}
   - component: {fileID: 65192864101931030}
   - component: {fileID: 54710356572828720}
-  m_Layer: 0
+  - component: {fileID: 114303876072130988}
+  - component: {fileID: 135348812241778860}
+  m_Layer: 9
   m_Name: Photo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,8 +128,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738353917162268}
   m_LocalRotation: {x: 0.7346068, y: 0, z: 0, w: 0.67849314}
-  m_LocalPosition: {x: -6.84, y: 1.1, z: 25.919}
-  m_LocalScale: {x: 0.2497451, y: 0.1695835, z: 0.24974495}
+  m_LocalPosition: {x: -11.684312, y: 0.801, z: 24.436}
+  m_LocalScale: {x: 0.29228717, y: 0.30434886, z: 0.18094514}
   m_Children:
   - {fileID: 4156521360952496}
   - {fileID: 4012570686875758}
@@ -265,7 +267,7 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1738353917162268}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.001
   m_Drag: 0
   m_AngularDrag: 0.3
   m_UseGravity: 0
@@ -296,3 +298,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d72975bd0b0854127bc1a7469be50195, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigidBodyCollider: {fileID: 65192864101931030}
+  lookCollider: {fileID: 135348812241778860}
+  fallingSpeed: {x: 0, y: 0, z: 0}
+--- !u!114 &114303876072130988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1738353917162268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fea6f8eea666334aaf9869ad8f7bcda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &135348812241778860
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1738353917162268}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6
+  m_Center: {x: 0, y: 0, z: 0}
